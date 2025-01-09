@@ -1,16 +1,17 @@
 # PNAS
 Ventilation Work Repository
 Gaver_PNAS_Ventilation.m
-Description:
+
+**Description:**
 This MATLAB script analyzes pressure-volume (PV) loops from respiratory data to calculate components of ventilation work. 
 
-Key Features: 
+**Key Features:** 
 •	Loads experimental data from specified directories. 
 •	Calculates input work, total work, tissue work, and recruitment work. 
 •	Generates visualizations of PV loops and recruitment regions. 
 •	Saves calculated work values to Excel files. 
 
-Usage: 
+**Usage:** 
 1. Prepare Input Files: 
 •	PNAS_DataFiles.txt: A text file listing the directories containing the experimental data in the root directory. 
 •	Data files are in the directory “PNAS data”
@@ -50,10 +51,10 @@ Notes:
 •	The definition and calculation of recruitment work may vary depending on the specific research context. 
 •	This script provides a basic framework. Adaptations may be necessary based on specific data characteristics and research needs. 
 •	Sample datafiles provided are:
-o	OD+RD+: 
-o	OD+RD-: 
-o	OD-RD+: 
-o	OD-RD-:
+o	OD+RD+: "Pig 22 calibrated data files"
+o	OD+RD-: "Pig 45 calibrated data files"
+o	OD-RD+: "Pig 30 calibrated data files"
+o	OD-RD-: "Pig 27 calibrated data files"
 
 Contact:
 Donald P. Gaver 
