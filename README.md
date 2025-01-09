@@ -1,6 +1,12 @@
-# PNAS
-Ventilation Work Repository
-Gaver_PNAS_Ventilation.m
+**PNAS Data and Script Repository**
+<ul>
+  Ventilation Work Repository
+</ul>
+
+**MATLAB Script**
+<ul>
+  Gaver_PNAS_Ventilation.m
+</ul>
 
 **Description:**
 This MATLAB script analyzes pressure-volume (PV) loops from respiratory data to calculate components of ventilation work. 
@@ -83,6 +89,7 @@ Some parameters can be adjusted within the script, such as:
 
 
 **Contact:**
-Donald P. Gaver 
-dpg@tulane.edu
+<ul>
+Donald P. Gaver (dpg@tulane.edu)
+  </ul>
 
