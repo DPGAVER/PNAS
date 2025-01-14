@@ -3,17 +3,17 @@
   Ventilation Work Repository
 </ul>
 
-**Normalized Compliance Data**
+**1. Normalized Compliance Data**
 <ul>
   Normalized Compliance.xlsx
 </ul>
 
-**PF Ratio Data**
+**2. PF Ratio Data**
 <ul>
   PF Ratio Data.xlsx
 </ul>
 
-**MATLAB Script**
+**3. MATLAB Script**
 <ul>
   Gaver_PNAS_Ventilation.m
 </ul>
