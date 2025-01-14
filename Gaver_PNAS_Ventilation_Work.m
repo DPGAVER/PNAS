@@ -98,12 +98,12 @@ for iloop=1:length(mydata)          %number of timepoints (BL, T0, ...)
     
     %% Convert to output type
     t = loopdata(:,1);
-    P_airway = loopdata(:,2);
-    Q = loopdata(:,3);
-    P_esoph = loopdata(:,4);
+    P_trach = loopdata(:,2);                    %Trachael Pressure
+    Q = loopdata(:,3);                          %Flowrate
+    P_esoph = loopdata(:,4);                    %Esophogeal pressure
     delt=t(2)-t(1);  
-    P_tp=P_airway - P_esoph;              %Transpulmonary Pressure   
-    P_alv = P_airway - Res(iloop)*Q;             %Interpretted Alveolar Pressure             
+    P_tp=P_trach - P_esoph;                     %Transpulmonary Pressure   
+    P_alv = P_trach - Res(iloop)*Q;             %Interpretted Alveolar Pressure             
     P_tissue=P_alv - P_esoph;                    %Tissue Pressure   
     V=zeros(length(Q),1);                        %Empty array for V
     
@@ -185,12 +185,12 @@ end
  % Find Pressure Min value
  % Find First min/max
         range1 = 1:round(length(t)/2);   %first half cycle
-        Psubset1 = P_airway(range1);  
+        Psubset1 = P_trach(range1);  
         [~, index1]=min(Psubset1);                                    %Pressure minumum
         Pmin_index1_unfilter= range1(index1);                              %Pressure minumum index
 
         range2 =Pmin_index1_unfilter:Pmin_index1_unfilter+round(length(t)/4);   %starts after min           
-        Psubset2 = P_airway(range2);    
+        Psubset2 = P_trach(range2);    
         [~, index2]=max(Psubset2);                                    %Pressure maximum
         Pmax_index2_unfilter= range2(index2);                              %Pressure maximum index
 
@@ -210,7 +210,7 @@ end
     istart=Pmin_index1_unfilter;                                            %Inflation portion
     iend=Pmax_index2_unfilter;
     
-     P_airway_inflate=zeros(iend-istart,1);
+     P_trach_inflate=zeros(iend-istart,1);
      P_tp_inflate=zeros(iend-istart,1);
      Q_inflate=zeros(iend-istart,1);  
      P_tissue_inflate=zeros(iend-istart,1);  
@@ -220,7 +220,7 @@ end
 
     for i=istart:iend
         index=i-istart+1;
-        P_airway_inflate(index)=P_airway(i);  
+        P_trach_inflate(index)=P_trach(i);  
         P_tp_inflate(index)=P_tp(i);  
         P_tissue_inflate(index)=P_tissue(i);
         t_inflate(index)=delt*(index-1);
@@ -232,12 +232,12 @@ end
     V_inflate(1)=V(istart); % for initial calculation  
     Insp_loop_index=1:length(Q_inflate)-1;
     for i=Insp_loop_index
-        P_airway_avg=(P_airway_inflate(i+1)+P_airway_inflate(i))/2;
+        P_trach_avg=(P_trach_inflate(i+1)+P_trach_inflate(i))/2;
         P_tp_avg=(P_tp_inflate(i+1)+P_tp_inflate(i))/2;
         Q_avg=(Q_inflate(i+1)+Q_inflate(i))/2;
         V_inflate(i+1)=V_inflate(i)+Q_avg*delt;
 %        Work_Insp_Total(iloop)= Work_Insp_Total(iloop)+P_tp_avg*Q_avg*delt;     %Inspiratory work provided by ventilator    
-        Work_Insp_Total(iloop)= Work_Insp_Total(iloop)+P_airway_avg*Q_avg*delt;     %Inspiratory work provided by ventilator    
+        Work_Insp_Total(iloop)= Work_Insp_Total(iloop)+P_trach_avg*Q_avg*delt;     %Inspiratory work provided by ventilator    
     end
 %% ##############  INFLECTION POINT ANALYSIS #################################
         P_tissue_min = min(P_tissue_inflate);
@@ -370,7 +370,7 @@ end
             plot(x1,y1);                                                                % Tangent line
             hold off
             xlabel({'Pressure_{tp} (cmH2O)'});
-            ylabel({'Relative Volume (l)'})%P_airway vs time
+            ylabel({'Relative Volume (l)'})%P_trach vs time
             title(Descrip, ...
                 ['Tlow = ',num2str(Tlow), ', Phigh=', num2str(Phigh),...
                 ',   ', datafilenames{iloop}]);
@@ -388,7 +388,7 @@ end
              plot(P_tissue(loop_indexV),V(loop_indexV));                                        % Transpulmonary pressure            
             hold off
             xlabel({'Pressure (cmH2O)'});
-            ylabel({'Relative Volume (l)'})%P_airway vs time
+            ylabel({'Relative Volume (l)'})%P_trach vs time
             title(Descrip, ...
                 ['Tlow = ',num2str(Tlow), ', Phigh=', num2str(Phigh),...
                 ',   ', datafilenames{iloop}]);
@@ -396,9 +396,9 @@ end
     saveas(gcf,FileName,'png')
     
      %Write datafile
-        PVTable_local = table(P_airway(loop_indexV), P_tp(loop_indexV), ...
+        PVTable_local = table(P_trach(loop_indexV), P_tp(loop_indexV), ...
                       P_tissue(loop_indexV), V(loop_indexV), ...
-                      'VariableNames', {'P_airway', 'P_tp', 'P_tissue', 'Volume'});
+                      'VariableNames', {'P_trach', 'P_tp', 'P_tissue', 'Volume'});
         FileName = append('PVloop_',num2str(iloop),'.xlsx');
         writetable(PVTable_local,FileName,"WriteMode","append");
 
